@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GenerateContentOfTables extends ConnectionData {
 
-    static void generatePositionTable() {
+    public static void generatePositionTable() {
         List<String> positions = GenerateDataHelper.generatePosition();
 
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {

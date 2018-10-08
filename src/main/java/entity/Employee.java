@@ -8,8 +8,8 @@ public class Employee {
     private long id;
     private String name;
     private String contactInformation;
-    private String projectName;
-    private String positionName;
+    private Project project;
+    private Position position;
     private Map<Project, List<Date>> timeBounds;
 
     public long getId() {
@@ -36,20 +36,20 @@ public class Employee {
         this.contactInformation = contactInformation;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public String getPositionName() {
-        return positionName;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setPositionName(String positionName) {
-        this.positionName = positionName;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Map<Project, List<Date>> getTimeBounds() {
