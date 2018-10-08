@@ -11,6 +11,7 @@ public class ProjectDAO {
     private Connection connection;
     private String insert = "INSERT INTO projects(title, description, start, end) VALUES(?, ?, ?, ?)";
     private String selectAll = "SELECT * FROM projects";
+    private String removeAll = "DELETE FROM projects";
 
     public ProjectDAO(Connection connection) {
         this.connection = connection;
@@ -52,5 +53,13 @@ public class ProjectDAO {
             ex.printStackTrace();
         }
         return projects;
+    }
+
+    public void removeAll() {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(removeAll);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -8,9 +8,10 @@ import java.util.List;
 
 public class PositionDAO {
 
+    private Connection connection;
     private String insert = "INSERT INTO positions(title) VALUE(?);";
     private String selectAll = "SELECT * FROM positions;";
-    private Connection connection;
+    private String removeAll = "DELETE FROM positions";
 
     public PositionDAO(Connection connection) {
         this.connection = connection;
@@ -41,5 +42,13 @@ public class PositionDAO {
             ex.printStackTrace();
         }
         return positions;
+    }
+
+    public void removeAll() {
+        try (Statement sttm = connection.createStatement()) {
+            sttm.execute(removeAll);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }
