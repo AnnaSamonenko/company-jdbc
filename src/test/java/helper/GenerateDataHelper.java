@@ -1,17 +1,24 @@
 package helper;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class GenerateDataHelper {
+class GenerateDataHelper {
 
     private static Random random = new Random();
 
     private GenerateDataHelper() {
     }
 
-    public static List<String> generatePosition() {
+    public static String generatePosition() {
+        List<String> list = new ArrayList<>();
+        return list.get(random.nextInt(list.size()));
+    }
+
+    public static List<String> generatePositions() {
         String[] positions = {"Java Developer", "Test Engineer", "Project Manager", "Solution Architect", "Team Lead"};
         return Arrays.asList(positions);
     }
@@ -19,7 +26,7 @@ public class GenerateDataHelper {
     public static String getRandomPersonName() {
         String[] surnames = {"Murphy ", "Smith", "Williams", "Taylor", "Jones", "Davies", "Walker"};
         String[] names = {"Oliver", "Jake", "Amelia", "Margaret", "Elizabeth", "Charlie", "Joanne"};
-        return names[random.nextInt(names.length)] + surnames[random.nextInt(surnames.length)];
+        return names[random.nextInt(names.length)] + " " + surnames[random.nextInt(surnames.length)];
     }
 
     public static String generateProjectName() {
@@ -31,16 +38,20 @@ public class GenerateDataHelper {
         return name[random.nextInt(name.length)] + "-" + code;
     }
 
-    public void generateRandomDate() {
-
+    public static LocalDate generateRandomDate() {
+        return LocalDate.of(randBetween(2000, 2017), randBetween(1, 12), randBetween(1, 28));
     }
 
-    public String generateContactInfo() {
+    public static String generateContactInfo() {
         int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < 8; i++)
             res.append(numbers[random.nextInt(numbers.length)]);
         return "phone number: " + res.toString();
+    }
+
+    private static int randBetween(int start, int end) {
+        return start + (int) Math.round(Math.random() * (end - start));
     }
 
 }

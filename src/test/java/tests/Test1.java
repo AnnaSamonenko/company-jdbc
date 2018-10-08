@@ -1,7 +1,7 @@
 package tests;
 
 import helper.GenerateContentOfTables;
-import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Find the PM of the project with the highest count of java developers and print out his/her name and contact info.
@@ -9,10 +9,16 @@ import org.junit.Before;
 
 public class Test1 {
 
-    @Before
+    @Test
     public void createContentOfTables() {
-        GenerateContentOfTables.generatePositionTable();
-
+        // GenerateContentOfTables.generatePositionTable();
+        // GenerateContentOfTables.generateProjectTable();
+        GenerateContentOfTables.generateEmployeeTable();
     }
+
+//    @After
+//    public void cleanDatabases() {
+//
+//    }
 
 }
