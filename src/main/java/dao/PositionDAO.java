@@ -35,6 +35,7 @@ public class PositionDAO {
         try (PreparedStatement prSttm = connection.prepareStatement(selectById)) {
             prSttm.setInt(1, id);
             try (ResultSet rs = prSttm.executeQuery()) {
+                rs.next();
                 position.setId(rs.getInt("position_id"));
                 position.setTitle(rs.getString("title"));
             }

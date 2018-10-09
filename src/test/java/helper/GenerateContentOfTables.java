@@ -1,16 +1,20 @@
 package helper;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import dao.EmployeeDAO;
 import dao.PositionDAO;
 import dao.ProjectDAO;
+import dao.WorkingHistoryDAO;
 import data.ConnectionData;
 import entity.Employee;
 import entity.Position;
 import entity.Project;
+import entity.WorkingHistory;
 import utils.MySQLDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,6 +53,31 @@ public class GenerateContentOfTables extends ConnectionData {
             ProjectDAO projectDAO = new ProjectDAO(connection);
             for (Project project : projects)
                 projectDAO.create(project);
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //TODO: 1 Add working history
+    public static void generateWorkingHistoryTable() {
+        Random r = new Random();
+        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+            WorkingHistoryDAO workingHistoryDAO = new WorkingHistoryDAO(connection);
+            ProjectDAO projectDAO = new ProjectDAO(connection);
+            List<Employee> employees = employeeDAO.getAll();
+            List<Project> projects = projectDAO.getAll();
+            List<LocalDate> dates = GenerateDataHelper.generateListWithRandomDate();
+            for (Employee employee : employees) {
+                for (int i = 0; i < dates.size() - 1; i += 2) {
+                    WorkingHistory wh = new WorkingHistory();
+                    wh.setEmployee(employee);
+                    wh.setProject(projects.get(r.nextInt(projects.size())));
+                    wh.setStartDate(dates.get(i));
+                    wh.setEndDate(dates.get(i + 1));
+                    workingHistoryDAO.create(wh);
+                }
+            }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }

@@ -44,7 +44,9 @@ public class ProjectDAO {
                 project.setDescription(rs.getString("description"));
                 project.setTitle(rs.getString("title"));
                 project.setStartDate(rs.getDate("start").toLocalDate());
-                project.setEndDate(rs.getDate("end").toLocalDate());
+                if (rs.getDate("end") == null) {
+                    project.setEndDate(null);
+                } else project.setEndDate(rs.getDate("end").toLocalDate());
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

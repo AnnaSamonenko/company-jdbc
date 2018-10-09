@@ -1,9 +1,7 @@
 package helper;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 class GenerateDataHelper {
 
@@ -27,9 +25,20 @@ class GenerateDataHelper {
         String[] name = {"Banker", "Cosmos", "Robotics", "CanadianTier"};
         String[] codeCharacters = {"X", "1", "2", "O"};
         StringBuilder code = new StringBuilder();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
             code.append(codeCharacters[random.nextInt(codeCharacters.length)]);
         return name[random.nextInt(name.length)] + "-" + code;
+    }
+
+    public static List<LocalDate> generateListWithRandomDate() {
+        int[] vector = {0, 2, 4, 6};
+        int randomNumber = vector[random.nextInt(vector.length)];
+        List<LocalDate> dates = new ArrayList<>();
+        for (int i = 0; i < randomNumber; i++) {
+            dates.add(generateRandomDate());
+        }
+        Collections.sort(dates);
+        return dates;
     }
 
     public static LocalDate generateRandomDate() {

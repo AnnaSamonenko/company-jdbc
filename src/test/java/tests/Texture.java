@@ -14,9 +14,10 @@ public class Texture extends GenerateContentOfTables {
 
     @Test
     public void createContentOfTables() {
-        GenerateContentOfTables.generatePositionTable();
-        GenerateContentOfTables.generateProjectTable();
-        GenerateContentOfTables.generateEmployeeTable();
+//        GenerateContentOfTables.generatePositionTable();
+//        GenerateContentOfTables.generateProjectTable();
+//        GenerateContentOfTables.generateEmployeeTable();
+        GenerateContentOfTables.generateWorkingHistoryTable();
     }
 
     @Test
