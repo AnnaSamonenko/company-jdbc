@@ -28,9 +28,7 @@ public class Texture extends GenerateContentOfTables {
             projectDAO.removeAll();
             PositionDAO positionDAO = new PositionDAO(connection);
             positionDAO.removeAll();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }

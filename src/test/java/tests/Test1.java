@@ -26,6 +26,5 @@ public class Test1 extends Texture {
             ex.printStackTrace();
         }
     }
-
 }
 

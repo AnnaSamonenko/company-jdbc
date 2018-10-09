@@ -1,22 +1,20 @@
 package entity;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class Employee {
-    private long id;
+    private int id;
     private String name;
     private String contactInformation;
     private Project project;
     private Position position;
-    private Map<Project, List<Date>> timeBounds;
+    private List<WorkingHistory> workingHistory;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,11 +50,11 @@ public class Employee {
         this.position = position;
     }
 
-    public Map<Project, List<Date>> getTimeBounds() {
-        return timeBounds;
+    public List<WorkingHistory> getWorkingHistory() {
+        return workingHistory;
     }
 
-    public void setTimeBounds(Map<Project, List<Date>> timeBounds) {
-        this.timeBounds = timeBounds;
+    public void setWorkingHistory(List<WorkingHistory> workingHistory) {
+        this.workingHistory = workingHistory;
     }
 }

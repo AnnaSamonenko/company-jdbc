@@ -12,11 +12,6 @@ class GenerateDataHelper {
     private GenerateDataHelper() {
     }
 
-    public static String generatePosition() {
-        String[] positions = {"Java Developer", "Test Engineer", "Front-End Developer"};
-        return positions[random.nextInt(positions.length)];
-    }
-
     public static List<String> generatePositions() {
         String[] positions = {"Java Developer", "Test Engineer", "Front-End Developer", "Project Manager"};
         return Arrays.asList(positions);

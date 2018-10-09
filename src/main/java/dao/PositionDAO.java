@@ -14,6 +14,7 @@ public class PositionDAO {
     private String removeAll = "DELETE FROM positions;";
     private String selectManagerPosition = "SELECT * FROM positions WHERE positions.title = 'Project Manager';";
     private String selectEngineerPosition = "SELECT * FROM positions WHERE positions.title != 'Project Manager';";
+    private String selectById = "SELECT * FROM positions WHERE position_id=?;";
 
     public PositionDAO(Connection connection) {
         this.connection = connection;
@@ -27,6 +28,20 @@ public class PositionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Position get(int id) {
+        Position position = new Position();
+        try (PreparedStatement prSttm = connection.prepareStatement(selectById)) {
+            prSttm.setInt(1, id);
+            try (ResultSet rs = prSttm.executeQuery()) {
+                position.setId(rs.getInt("position_id"));
+                position.setTitle(rs.getString("title"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return position;
     }
 
     public Position getManagerPosition() {

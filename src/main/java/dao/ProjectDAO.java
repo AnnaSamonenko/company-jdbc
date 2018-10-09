@@ -9,9 +9,10 @@ import java.util.List;
 public class ProjectDAO {
 
     private Connection connection;
-    private String insert = "INSERT INTO projects(title, description, start, end) VALUES(?, ?, ?, ?)";
+    private String insert = "INSERT INTO projects(title, description, start, end) VALUES(?, ?, ?, ?);";
     private String selectAll = "SELECT * FROM projects";
     private String removeAll = "DELETE FROM projects";
+    private String selectById = "SELECT * FROM projects WHERE project_id=?;";
 
     public ProjectDAO(Connection connection) {
         this.connection = connection;
@@ -31,6 +32,24 @@ public class ProjectDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Project get(int id) {
+        Project project = new Project();
+        try (PreparedStatement prSttm = connection.prepareStatement(selectById)) {
+            prSttm.setInt(1, id);
+            try (ResultSet rs = prSttm.executeQuery()) {
+                rs.next();
+                project.setId(rs.getInt("project_id"));
+                project.setDescription(rs.getString("description"));
+                project.setTitle(rs.getString("title"));
+                project.setStartDate(rs.getDate("start").toLocalDate());
+                project.setEndDate(rs.getDate("end").toLocalDate());
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return project;
     }
 
     public List<Project> getAll() {

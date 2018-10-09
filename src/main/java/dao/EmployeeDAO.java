@@ -9,6 +9,7 @@ public class EmployeeDAO {
 
     private Connection connection;
     private String insert = "INSERT INTO employees(name, contact_information, position_id, project_id) VALUES(?, ?, ?, ?)";
+    private String selectById = "SELECT * FROM employees WHERE employee_id=?;";
     private String removeAll = "DELETE FROM employees";
     private String pathToFile = "C:\\Users\\anna.samonenko\\Desktop\\project\\src\\main\\resources\\query1.sql";
 
@@ -26,6 +27,26 @@ public class EmployeeDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Employee get(int id) {
+        Employee employee = new Employee();
+        try (PreparedStatement prSttm = connection.prepareStatement(selectById)) {
+            prSttm.setInt(1, id);
+            try (ResultSet rs = prSttm.executeQuery(selectById)) {
+                rs.next();
+                employee.setName(rs.getString("name"));
+                employee.setId(rs.getInt("employee_id"));
+                employee.setContactInformation(rs.getString("contact_information"));
+                ProjectDAO projectDAO = new ProjectDAO(connection);
+                employee.setProject(projectDAO.get(rs.getInt("project_id")));
+                PositionDAO positionDAO = new PositionDAO(connection);
+                employee.setPosition(positionDAO.get(rs.getInt("position_id")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return employee;
     }
 
     public void removeAll() {

@@ -29,9 +29,7 @@ public class GenerateContentOfTables extends ConnectionData {
             for (String position : positions)
                 positionDAO.create(position);
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
@@ -51,9 +49,7 @@ public class GenerateContentOfTables extends ConnectionData {
             ProjectDAO projectDAO = new ProjectDAO(connection);
             for (Project project : projects)
                 projectDAO.create(project);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
@@ -81,9 +77,7 @@ public class GenerateContentOfTables extends ConnectionData {
             for (Employee employee : employees)
                 employeeDAO.create(employee);
 
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
         assignPMToProject();
@@ -104,9 +98,7 @@ public class GenerateContentOfTables extends ConnectionData {
                 employee.setProject(project);
                 employeeDAO.create(employee);
             }
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
     }
