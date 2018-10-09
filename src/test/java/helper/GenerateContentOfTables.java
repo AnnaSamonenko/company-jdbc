@@ -18,6 +18,9 @@ import java.util.Random;
 
 public class GenerateContentOfTables extends ConnectionData {
 
+    private static final int AMOUNT_OF_EMPLOYEES = 20;
+    private static final int AMOUNT_OF_PROJECTS = 3;
+
     public static void generatePositionTable() {
         List<String> positions = GenerateDataHelper.generatePositions();
 
@@ -35,7 +38,7 @@ public class GenerateContentOfTables extends ConnectionData {
 
     public static void generateProjectTable() {
         List<Project> projects = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < AMOUNT_OF_PROJECTS; i++) {
             Project project = new Project();
             project.setDescription("Some description:)");
             project.setStartDate(GenerateDataHelper.generateRandomDate());
@@ -63,10 +66,10 @@ public class GenerateContentOfTables extends ConnectionData {
 
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
             PositionDAO positionDAO = new PositionDAO(connection);
-            positions = positionDAO.getAll();
+            positions = positionDAO.getEngineerPositions();
             ProjectDAO projectDAO = new ProjectDAO(connection);
             project = projectDAO.getAll();
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < AMOUNT_OF_EMPLOYEES; i++) {
                 Employee employee = new Employee();
                 employee.setName(GenerateDataHelper.getRandomPersonName());
                 employee.setContactInformation(GenerateDataHelper.generateContactInfo());
@@ -83,6 +86,28 @@ public class GenerateContentOfTables extends ConnectionData {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        assignPMToProject();
     }
 
+    private static void assignPMToProject() {
+        List<Project> projects;
+        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+            ProjectDAO projectDAO = new ProjectDAO(connection);
+            PositionDAO positionDAO = new PositionDAO(connection);
+            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+            projects = projectDAO.getAll();
+            for (Project project : projects) {
+                Employee employee = new Employee();
+                employee.setName(GenerateDataHelper.getRandomPersonName());
+                employee.setContactInformation(GenerateDataHelper.generateContactInfo());
+                employee.setPosition(positionDAO.getManagerPosition());
+                employee.setProject(project);
+                employeeDAO.create(employee);
+            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

@@ -4,8 +4,6 @@ import dao.EmployeeDAO;
 import dao.PositionDAO;
 import dao.ProjectDAO;
 import helper.GenerateContentOfTables;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import utils.MySQLDatabaseConnection;
 
@@ -14,7 +12,7 @@ import java.sql.SQLException;
 
 public class Texture extends GenerateContentOfTables {
 
-    //@Before
+    @Test
     public void createContentOfTables() {
         GenerateContentOfTables.generatePositionTable();
         GenerateContentOfTables.generateProjectTable();

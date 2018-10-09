@@ -11,7 +11,9 @@ public class PositionDAO {
     private Connection connection;
     private String insert = "INSERT INTO positions(title) VALUE(?);";
     private String selectAll = "SELECT * FROM positions;";
-    private String removeAll = "DELETE FROM positions";
+    private String removeAll = "DELETE FROM positions;";
+    private String selectManagerPosition = "SELECT * FROM positions WHERE positions.title = 'Project Manager';";
+    private String selectEngineerPosition = "SELECT * FROM positions WHERE positions.title != 'Project Manager';";
 
     public PositionDAO(Connection connection) {
         this.connection = connection;
@@ -25,6 +27,37 @@ public class PositionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Position getManagerPosition() {
+        Position position = new Position();
+        try (Statement st = connection.createStatement()) {
+            try (ResultSet rs = st.executeQuery(selectManagerPosition)) {
+                rs.next();
+                position.setTitle(rs.getString("title"));
+                position.setId(rs.getInt("position_id"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return position;
+    }
+
+    public List<Position> getEngineerPositions() {
+        List<Position> positions = new ArrayList<>();
+        try (Statement sttm = connection.createStatement()) {
+            try (ResultSet rs = sttm.executeQuery(selectEngineerPosition)) {
+                while (rs.next()) {
+                    Position position = new Position();
+                    position.setId(rs.getInt("position_id"));
+                    position.setTitle(rs.getString("title"));
+                    positions.add(position);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return positions;
     }
 
     public List<Position> getAll() {

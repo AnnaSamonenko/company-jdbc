@@ -1,7 +1,6 @@
 package helper;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -14,12 +13,12 @@ class GenerateDataHelper {
     }
 
     public static String generatePosition() {
-        List<String> list = new ArrayList<>();
-        return list.get(random.nextInt(list.size()));
+        String[] positions = {"Java Developer", "Test Engineer", "Front-End Developer"};
+        return positions[random.nextInt(positions.length)];
     }
 
     public static List<String> generatePositions() {
-        String[] positions = {"Java Developer", "Test Engineer", "Project Manager", "Solution Architect", "Team Lead"};
+        String[] positions = {"Java Developer", "Test Engineer", "Front-End Developer", "Project Manager"};
         return Arrays.asList(positions);
     }
 

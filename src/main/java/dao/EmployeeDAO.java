@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class EmployeeDAO {
 
     private Connection connection;
-    private String insert = "INSERT INTO employees(name, contact_information, positionId, projectId) VALUES(?, ?, ?, ?)";
+    private String insert = "INSERT INTO employees(name, contact_information, position_id, project_id) VALUES(?, ?, ?, ?)";
     private String removeAll = "DELETE FROM employees";
 
     public EmployeeDAO(Connection connection) {
