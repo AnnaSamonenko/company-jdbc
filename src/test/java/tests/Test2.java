@@ -10,6 +10,7 @@ public class Test2 extends Texture {
 
     @Test
     public void test() {
+
     }
 
 }
