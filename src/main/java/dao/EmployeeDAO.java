@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Employee;
-import entity.WorkingHistory;
 import utils.ReadSQLScript;
 
 import java.sql.*;
@@ -15,8 +14,8 @@ public class EmployeeDAO {
     private String selectAll = "SELECT * FROM employees";
     private String selectById = "SELECT * FROM employees WHERE employee_id=?;";
     private String removeAll = "DELETE FROM employees";
-    private String pathToFile = "C:\\Users\\anna.samonenko\\Desktop\\project\\src\\main\\resources\\query1.sql";
-    private String pathToFile2 = "C:\\Users\\anna.samonenko\\Desktop\\project\\src\\main\\resources\\query2.sql";
+    private String pathToFile = "\\src\\main\\resources\\query1.sql";
+    private String pathToFile2 = "\\src\\main\\resources\\query2.sql";
 
     public EmployeeDAO(Connection connection) {
         this.connection = connection;

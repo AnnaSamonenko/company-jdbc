@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) {
         int amountOfProjects = 3;
         int amountOfEmployees = 20;
-        createContentOfTables(amountOfProjects, amountOfEmployees);
+        //createContentOfTables(amountOfProjects, amountOfEmployees);
 
         //Find the PM of the project with the highest count of java developers
         // and print out his/her name and contact info.
@@ -44,7 +44,6 @@ public class Main {
             ex.printStackTrace();
         }
     }
-
 
     public static void createContentOfTables(int amountOfProjects, int amountOfEmployees) {
         GenerateContentOfCompanyDatabase cretaeDBContent = new GenerateContentOfCompanyDatabase(URL, USER, PASSWORD, DATABASE_NAME);
