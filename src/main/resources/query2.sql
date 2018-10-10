@@ -4,4 +4,5 @@ JOIN positions AS p
 ON e.position_id = p.position_id AND p.title = "Test Engineer"
 JOIN working_history AS wh
 ON wh.employee_id = e.employee_id
-GROUP BY e.employee_id;
+GROUP BY e.employee_id
+ORDER BY COUNT(wh.employee_id) DESC;

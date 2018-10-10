@@ -11,6 +11,7 @@ public class WorkingHistoryDAO {
     private Connection connection;
     private String insert = "INSERT INTO working_history(project_id, employee_id, start_date, end_date) VALUES(?, ?, ?, ?);";
     private String select = "SELECT * FROM working_history";
+    private String removeAll = "DELETE FROM working_history";
 
     public WorkingHistoryDAO(Connection connection) {
         this.connection = connection;
@@ -50,4 +51,11 @@ public class WorkingHistoryDAO {
         return workingHistories;
     }
 
+    public void removeAll() {
+        try (Statement sttm = connection.createStatement()) {
+            sttm.execute(removeAll);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

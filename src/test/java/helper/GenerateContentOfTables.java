@@ -1,6 +1,5 @@
 package helper;
 
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import dao.EmployeeDAO;
 import dao.PositionDAO;
 import dao.ProjectDAO;
@@ -66,8 +65,8 @@ public class GenerateContentOfTables extends ConnectionData {
             ProjectDAO projectDAO = new ProjectDAO(connection);
             List<Employee> employees = employeeDAO.getAll();
             List<Project> projects = projectDAO.getAll();
-            List<LocalDate> dates = GenerateDataHelper.generateListWithRandomDate();
             for (Employee employee : employees) {
+                List<LocalDate> dates = GenerateDataHelper.generateListWithRandomDate();
                 for (int i = 0; i < dates.size() - 1; i += 2) {
                     WorkingHistory wh = new WorkingHistory();
                     wh.setEmployee(employee);

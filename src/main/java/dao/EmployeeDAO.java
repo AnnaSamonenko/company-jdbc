@@ -37,7 +37,7 @@ public class EmployeeDAO {
         Employee employee = new Employee();
         try (PreparedStatement prSttm = connection.prepareStatement(selectById)) {
             prSttm.setInt(1, id);
-            try (ResultSet rs = prSttm.executeQuery(selectById)) {
+            try (ResultSet rs = prSttm.executeQuery()) {
                 rs.next();
                 employee.setName(rs.getString("name"));
                 employee.setId(rs.getInt("employee_id"));
