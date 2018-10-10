@@ -58,7 +58,6 @@ public class GenerateContentOfTables extends ConnectionData {
         }
     }
 
-    //TODO: 1 Add working history
     public static void generateWorkingHistoryTable() {
         Random r = new Random();
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
