@@ -66,13 +66,34 @@ public class GenerateContentOfTables extends ConnectionData {
             List<Employee> employees = employeeDAO.getAll();
             List<Project> projects = projectDAO.getAll();
             for (Employee employee : employees) {
-                List<LocalDate> dates = GenerateDataHelper.generateListWithRandomDate();
-                for (int i = 0; i < dates.size() - 1; i += 2) {
+                if (employee.getPosition().getTitle().equals("Project Manager")) {
                     WorkingHistory wh = new WorkingHistory();
+                    wh.setStartDate(employee.getProject().getStartDate());
+                    wh.setProject(employee.getProject());
                     wh.setEmployee(employee);
-                    wh.setProject(projects.get(r.nextInt(projects.size())));
-                    wh.setStartDate(dates.get(i));
-                    wh.setEndDate(dates.get(i + 1));
+                    wh.setEndDate(employee.getProject().getEndDate());
+                    workingHistoryDAO.create(wh);
+                    break;
+                } else {
+                    List<LocalDate> dates = GenerateDataHelper.generateListWithRandomDate();
+                    for (int i = 0; i < dates.size() - 1; i += 2) {
+                        WorkingHistory wh = new WorkingHistory();
+                        wh.setEmployee(employee);
+                        wh.setProject(projects.get(r.nextInt(projects.size())));
+                        wh.setStartDate(dates.get(i));
+                        wh.setEndDate(dates.get(i + 1));
+                        workingHistoryDAO.create(wh);
+                    }
+                    WorkingHistory wh = new WorkingHistory();
+                    // get date in project and bigger then dates
+
+                    if (dates.size() != 0 && employee.getProject().getStartDate().isBefore(dates.get(dates.size() - 1)))
+                        wh.setStartDate(GenerateDataHelper.generateRandomDateBiggerThen(dates.get(dates.size() - 1)));
+                    else
+                        wh.setStartDate(GenerateDataHelper.generateRandomDateBiggerThen(employee.getProject().getStartDate()));
+                    wh.setProject(employee.getProject());
+                    wh.setEmployee(employee);
+                    wh.setEndDate(employee.getProject().getEndDate());
                     workingHistoryDAO.create(wh);
                 }
             }

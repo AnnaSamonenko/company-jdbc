@@ -45,6 +45,10 @@ class GenerateDataHelper {
         return LocalDate.of(randBetween(2000, 2017), randBetween(1, 12), randBetween(1, 28));
     }
 
+    public static LocalDate generateRandomDateBiggerThen(LocalDate date) {
+        return LocalDate.of(randBetween(date.getYear() + 1, 2017), randBetween(1, 12), randBetween(1, 28));
+    }
+
     public static String generateContactInfo() {
         int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
         StringBuilder res = new StringBuilder();

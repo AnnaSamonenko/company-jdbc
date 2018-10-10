@@ -2,7 +2,6 @@ package tests;
 
 import dao.EmployeeDAO;
 import entity.Employee;
-import org.junit.Assert;
 import org.junit.Test;
 import utils.MySQLDatabaseConnection;
 
@@ -12,7 +11,6 @@ import java.sql.SQLException;
 /**
  * Find the PM of the project with the highest count of java developers and print out his/her name and contact info.
  */
-
 
 public class Test1 extends Texture {
 

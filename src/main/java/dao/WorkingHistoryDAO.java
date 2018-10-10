@@ -22,7 +22,10 @@ public class WorkingHistoryDAO {
             prSttm.setInt(1, wh.getProject().getId());
             prSttm.setInt(2, wh.getEmployee().getId());
             prSttm.setDate(3, java.sql.Date.valueOf(wh.getStartDate()));
-            prSttm.setDate(4, java.sql.Date.valueOf(wh.getEndDate()));
+            if (wh.getEndDate() != null)
+                prSttm.setDate(4, java.sql.Date.valueOf(wh.getEndDate()));
+            else
+                prSttm.setDate(4, null);
             prSttm.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
