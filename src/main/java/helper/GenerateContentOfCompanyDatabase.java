@@ -4,7 +4,6 @@ import dao.EmployeeDAO;
 import dao.PositionDAO;
 import dao.ProjectDAO;
 import dao.WorkingHistoryDAO;
-import data.ConnectionData;
 import entity.Employee;
 import entity.Position;
 import entity.Project;
@@ -19,15 +18,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class GenerateContentOfTables extends ConnectionData {
+public class GenerateContentOfCompanyDatabase {
 
-    private static final int AMOUNT_OF_EMPLOYEES = 20;
-    private static final int AMOUNT_OF_PROJECTS = 3;
+    private static String url;
+    private static String user;
+    private static String password;
+    private static String databaseName;
+
+    public GenerateContentOfCompanyDatabase(String url, String user, String password, String databaseName) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+        this.databaseName = databaseName;
+    }
 
     public static void generatePositionTable() {
         List<String> positions = GenerateDataHelper.generatePositions();
 
-        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+        try (Connection connection = MySQLDatabaseConnection.getConnection(url, user, password, databaseName)) {
             PositionDAO positionDAO = new PositionDAO(connection);
             for (String position : positions)
                 positionDAO.create(position);
@@ -37,9 +45,9 @@ public class GenerateContentOfTables extends ConnectionData {
         }
     }
 
-    public static void generateProjectTable() {
+    public static void generateProjectTable(int amountOfProjects) {
         List<Project> projects = new ArrayList<>();
-        for (int i = 0; i < AMOUNT_OF_PROJECTS; i++) {
+        for (int i = 0; i < amountOfProjects; i++) {
             Project project = new Project();
             project.setDescription("Some description:)");
             project.setStartDate(GenerateDataHelper.generateRandomDate());
@@ -48,7 +56,7 @@ public class GenerateContentOfTables extends ConnectionData {
             projects.add(project);
         }
 
-        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+        try (Connection connection = MySQLDatabaseConnection.getConnection(url, user, password, databaseName)) {
             ProjectDAO projectDAO = new ProjectDAO(connection);
             for (Project project : projects)
                 projectDAO.create(project);
@@ -59,7 +67,7 @@ public class GenerateContentOfTables extends ConnectionData {
 
     public static void generateWorkingHistoryTable() {
         Random r = new Random();
-        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+        try (Connection connection = MySQLDatabaseConnection.getConnection(url, user, password, databaseName)) {
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             WorkingHistoryDAO workingHistoryDAO = new WorkingHistoryDAO(connection);
             ProjectDAO projectDAO = new ProjectDAO(connection);
@@ -100,18 +108,18 @@ public class GenerateContentOfTables extends ConnectionData {
         }
     }
 
-    public static void generateEmployeeTable() {
+    public static void generateEmployeeTable(int amountOfEmployees) {
         List<Employee> employees = new LinkedList<>();
         Random r = new Random();
         List<Position> positions;
         List<Project> project;
 
-        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+        try (Connection connection = MySQLDatabaseConnection.getConnection(url, user, password, databaseName)) {
             PositionDAO positionDAO = new PositionDAO(connection);
             positions = positionDAO.getEngineerPositions();
             ProjectDAO projectDAO = new ProjectDAO(connection);
             project = projectDAO.getAll();
-            for (int i = 0; i < AMOUNT_OF_EMPLOYEES; i++) {
+            for (int i = 0; i < amountOfEmployees; i++) {
                 Employee employee = new Employee();
                 employee.setName(GenerateDataHelper.getRandomPersonName());
                 employee.setContactInformation(GenerateDataHelper.generateContactInfo());
@@ -131,7 +139,7 @@ public class GenerateContentOfTables extends ConnectionData {
 
     private static void assignPMToProject() {
         List<Project> projects;
-        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+        try (Connection connection = MySQLDatabaseConnection.getConnection(url, user, password, databaseName)) {
             ProjectDAO projectDAO = new ProjectDAO(connection);
             PositionDAO positionDAO = new PositionDAO(connection);
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
