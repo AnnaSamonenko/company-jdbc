@@ -18,7 +18,7 @@ public class Test1 extends Texture {
     public void test() {
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-            Employee em = employeeDAO.getExecuteQuery1();
+            Employee em = employeeDAO.findPMWithHighestCountOfJavaDev();
             // TODO: add appropriate expected result
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

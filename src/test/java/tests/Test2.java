@@ -19,7 +19,7 @@ public class Test2 extends Texture {
     public void test() {
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-            List<Employee> employees = employeeDAO.getExecuteQuery2();
+            List<Employee> employees = employeeDAO.findTestEngineersSortedByWorkingHistory();
             // TODO: add appropriate expected result
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

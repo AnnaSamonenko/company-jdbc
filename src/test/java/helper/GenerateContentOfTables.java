@@ -85,8 +85,6 @@ public class GenerateContentOfTables extends ConnectionData {
                         workingHistoryDAO.create(wh);
                     }
                     WorkingHistory wh = new WorkingHistory();
-                    // get date in project and bigger then dates
-
                     if (dates.size() != 0 && employee.getProject().getStartDate().isBefore(dates.get(dates.size() - 1)))
                         wh.setStartDate(GenerateDataHelper.generateRandomDateBiggerThen(dates.get(dates.size() - 1)));
                     else

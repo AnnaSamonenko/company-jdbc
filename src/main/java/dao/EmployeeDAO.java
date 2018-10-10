@@ -83,7 +83,7 @@ public class EmployeeDAO {
         }
     }
 
-    public Employee getExecuteQuery1() {
+    public Employee findPMWithHighestCountOfJavaDev() {
         Employee manager = new Employee();
         try (Statement st = connection.createStatement()) {
             try (ResultSet rs = st.executeQuery(ReadSQLScript.read(pathToFile))) {
@@ -97,7 +97,7 @@ public class EmployeeDAO {
         return manager;
     }
 
-    public List<Employee> getExecuteQuery2() {
+    public List<Employee> findTestEngineersSortedByWorkingHistory() {
         List<Employee> employees = new ArrayList<>();
         try (Statement sttm = connection.createStatement()) {
             try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToFile2))) {
