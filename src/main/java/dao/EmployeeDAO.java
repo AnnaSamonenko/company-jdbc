@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Employee;
+import entity.WorkingHistory;
 import utils.ReadSQLScript;
 
 import java.sql.*;
@@ -46,6 +47,8 @@ public class EmployeeDAO {
                 employee.setProject(projectDAO.get(rs.getInt("project_id")));
                 PositionDAO positionDAO = new PositionDAO(connection);
                 employee.setPosition(positionDAO.get(rs.getInt("position_id")));
+                WorkingHistoryDAO whDAO = new WorkingHistoryDAO(connection);
+                employee.setWorkingHistory(whDAO.getByEmployeeId(id));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -12,6 +12,7 @@ public class WorkingHistoryDAO {
     private String insert = "INSERT INTO working_history(project_id, employee_id, start_date, end_date) VALUES(?, ?, ?, ?);";
     private String select = "SELECT * FROM working_history";
     private String removeAll = "DELETE FROM working_history";
+    private String selectByEmployeeId = "SELECT * FROM working_history WHERE employee_id = ?;";
 
     public WorkingHistoryDAO(Connection connection) {
         this.connection = connection;
@@ -30,6 +31,29 @@ public class WorkingHistoryDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public List<WorkingHistory> getByEmployeeId(int employeeId) {
+        List<WorkingHistory> workingHistory = new ArrayList<>();
+        ProjectDAO projectDAO = new ProjectDAO(connection);
+        try (PreparedStatement prSttm = connection.prepareStatement(selectByEmployeeId)) {
+            prSttm.setInt(1, employeeId);
+            try (ResultSet rs = prSttm.executeQuery()) {
+                while (rs.next()) {
+                    WorkingHistory wh = new WorkingHistory();
+                    wh.setId(rs.getInt("working_history_id"));
+                    wh.setProject(projectDAO.get(rs.getInt("project_id")));
+                    wh.setStartDate(rs.getDate("start_date").toLocalDate());
+                    if (rs.getDate("end_date") == null)
+                        wh.setEndDate(null);
+                    else wh.setEndDate(rs.getDate("end_date").toLocalDate());
+                    workingHistory.add(wh);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return workingHistory;
     }
 
     public List<WorkingHistory> getAll() {
