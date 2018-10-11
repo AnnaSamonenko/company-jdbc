@@ -22,11 +22,14 @@ public class Main {
     public static void main(String[] args) {
         int amountOfProjects = 3;
         int amountOfEmployees = 20;
-        //createContentOfTables(amountOfProjects, amountOfEmployees);
+        createContentOfTables(amountOfProjects, amountOfEmployees);
         printTables();
-        System.out.print("Result of 2 query: ");
+        System.out.println("------ RESULT OF 1 QUERY ------");
+        executeQuery1();
+        System.out.println();
+        System.out.println("------ RESULT OF 2 QUERY ------");
         executeQuery2();
-        //cleanTables();
+        cleanTables();
     }
 
     //Find the PM of the project with the highest count of java developers

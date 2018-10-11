@@ -14,7 +14,7 @@ public class MySQLDatabaseConnection implements AutoCloseable {
     public static Connection getConnection(String url, String name, String password,
                                            String databaseName) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection(url + "/" + databaseName, name, password);
+        connection = DriverManager.getConnection(url + "/" + databaseName + "?useSSL=false", name, password);
         return connection;
     }
 
