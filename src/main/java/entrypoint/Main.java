@@ -22,8 +22,10 @@ public class Main {
     public static void main(String[] args) {
         int amountOfProjects = 3;
         int amountOfEmployees = 20;
-        createContentOfTables(amountOfProjects, amountOfEmployees);
+        //createContentOfTables(amountOfProjects, amountOfEmployees);
         printTables();
+        System.out.print("Result of 2 query: ");
+        executeQuery2();
         //cleanTables();
     }
 
@@ -45,9 +47,15 @@ public class Main {
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             List<Employee> employees = employeeDAO.findTestEngineersSortedByWorkingHistory();
-
+            printList(employees);
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private static void printList(List<Employee> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i) + "\n");
         }
     }
 

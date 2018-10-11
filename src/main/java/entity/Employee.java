@@ -57,4 +57,16 @@ public class Employee {
     public void setWorkingHistory(List<WorkingHistory> workingHistory) {
         this.workingHistory = workingHistory;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id: " + id +
+                ", name: " + name +
+                ", contactInformation: " + contactInformation +
+                ", project: " + project.getTitle() +
+                ", position: " + position.getTitle() +
+                ", amount of projects: " + workingHistory.size() +
+                '}';
+    }
 }
