@@ -22,10 +22,14 @@ public class Main {
     public static void main(String[] args) {
         int amountOfProjects = 3;
         int amountOfEmployees = 20;
-        //createContentOfTables(amountOfProjects, amountOfEmployees);
+        createContentOfTables(amountOfProjects, amountOfEmployees);
+        printTables();
+        //cleanTables();
+    }
 
-        //Find the PM of the project with the highest count of java developers
-        // and print out his/her name and contact info.
+    //Find the PM of the project with the highest count of java developers
+    // and print out his/her name and contact info.
+    public static void executeQuery1() {
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             Employee em = employeeDAO.findPMWithHighestCountOfJavaDev();
@@ -33,24 +37,26 @@ public class Main {
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
+    }
 
-        // List all the test engineers that currently work at the company,
-        // sorted by count of projects they participated in.
+    // List all the test engineers that currently work at the company,
+    // sorted by count of projects they participated in.
+    public static void executeQuery2() {
         try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             List<Employee> employees = employeeDAO.findTestEngineersSortedByWorkingHistory();
-            // TODO: output
+
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     public static void createContentOfTables(int amountOfProjects, int amountOfEmployees) {
-        GenerateContentOfCompanyDatabase cretaeDBContent = new GenerateContentOfCompanyDatabase(URL, USER, PASSWORD, DATABASE_NAME);
-        cretaeDBContent.generatePositionTable();
-        cretaeDBContent.generateProjectTable(amountOfProjects);
-        cretaeDBContent.generateEmployeeTable(amountOfEmployees);
-        cretaeDBContent.generateWorkingHistoryTable();
+        GenerateContentOfCompanyDatabase createDBContent = new GenerateContentOfCompanyDatabase(URL, USER, PASSWORD, DATABASE_NAME);
+        createDBContent.generatePositionTable();
+        createDBContent.generateProjectTable(amountOfProjects);
+        createDBContent.generateEmployeeTable(amountOfEmployees);
+        createDBContent.generateWorkingHistoryTable();
     }
 
     public static void cleanTables() {
@@ -64,6 +70,21 @@ public class Main {
             WorkingHistoryDAO whDAO = new WorkingHistoryDAO(connection);
             whDAO.removeAll();
         } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void printTables() {
+        try (Connection connection = MySQLDatabaseConnection.getConnection(URL, USER, PASSWORD, DATABASE_NAME)) {
+            PositionDAO positionDAO = new PositionDAO(connection);
+            positionDAO.print();
+            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+            employeeDAO.print();
+            ProjectDAO projectDAO = new ProjectDAO(connection);
+            projectDAO.print();
+            WorkingHistoryDAO whDAO = new WorkingHistoryDAO(connection);
+            whDAO.print();
+        } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
     }

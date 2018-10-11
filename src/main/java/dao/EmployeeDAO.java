@@ -14,8 +14,9 @@ public class EmployeeDAO {
     private String selectAll = "SELECT * FROM employees";
     private String selectById = "SELECT * FROM employees WHERE employee_id=?;";
     private String removeAll = "DELETE FROM employees";
-    private String pathToFile = "\\src\\main\\resources\\query1.sql";
-    private String pathToFile2 = "\\src\\main\\resources\\query2.sql";
+    private String pathToQuery1 = "\\src\\main\\resources\\query1.sql";
+    private String pathToQuery2 = "\\src\\main\\resources\\query2.sql";
+    private String pathToPrintQuery = "\\src\\main\\resources\\display\\displayEmployeeTable.sql";
 
     public EmployeeDAO(Connection connection) {
         this.connection = connection;
@@ -88,7 +89,7 @@ public class EmployeeDAO {
     public Employee findPMWithHighestCountOfJavaDev() {
         Employee manager = new Employee();
         try (Statement st = connection.createStatement()) {
-            try (ResultSet rs = st.executeQuery(ReadSQLScript.read(pathToFile))) {
+            try (ResultSet rs = st.executeQuery(ReadSQLScript.read(pathToQuery1))) {
                 rs.next();
                 manager.setName(rs.getString("name"));
                 manager.setContactInformation(rs.getString("contact_information"));
@@ -102,7 +103,7 @@ public class EmployeeDAO {
     public List<Employee> findTestEngineersSortedByWorkingHistory() {
         List<Employee> employees = new ArrayList<>();
         try (Statement sttm = connection.createStatement()) {
-            try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToFile2))) {
+            try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToQuery2))) {
                 while (rs.next()) {
                     employees.add(get(rs.getInt("employee_id")));
                 }
@@ -111,5 +112,29 @@ public class EmployeeDAO {
             ex.printStackTrace();
         }
         return employees;
+    }
+
+    public void print() {
+        System.out.println("EMPLOYEE TABLE:");
+        try (Statement sttm = connection.createStatement()) {
+            try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToPrintQuery))) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int columnsNumber = rsmd.getColumnCount();
+                for (int i = 1; i <= columnsNumber; i++) {
+                    System.out.print(String.format("|%-25s|", rsmd.getColumnLabel(i)));
+                }
+                System.out.println();
+                while (rs.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        String columnValue = rs.getString(i);
+                        System.out.print(String.format("|%-25s|", columnValue));
+                    }
+                    System.out.println();
+                }
+            }
+            System.out.println();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

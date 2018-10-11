@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Project;
+import utils.ReadSQLScript;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class ProjectDAO {
     private String selectAll = "SELECT * FROM projects";
     private String removeAll = "DELETE FROM projects";
     private String selectById = "SELECT * FROM projects WHERE project_id=?;";
+    private String pathToPrintQuery = "\\src\\main\\resources\\display\\displayProjectTable.sql";
 
     public ProjectDAO(Connection connection) {
         this.connection = connection;
@@ -79,6 +81,30 @@ public class ProjectDAO {
     public void removeAll() {
         try (Statement statement = connection.createStatement()) {
             statement.execute(removeAll);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void print() {
+        System.out.println("PROJECT TABLE:");
+        try (Statement sttm = connection.createStatement()) {
+            try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToPrintQuery))) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int columnsNumber = rsmd.getColumnCount();
+                for (int i = 1; i <= columnsNumber; i++) {
+                    System.out.print(String.format("|%-20s|", rsmd.getColumnLabel(i)));
+                }
+                System.out.println();
+                while (rs.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        String columnValue = rs.getString(i);
+                        System.out.print(String.format("|%-20s|", columnValue));
+                    }
+                    System.out.println();
+                }
+            }
+            System.out.println();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

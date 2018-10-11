@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Position;
+import utils.ReadSQLScript;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class PositionDAO {
     private String selectManagerPosition = "SELECT * FROM positions WHERE positions.title = 'Project Manager';";
     private String selectEngineerPosition = "SELECT * FROM positions WHERE positions.title != 'Project Manager';";
     private String selectById = "SELECT * FROM positions WHERE position_id=?;";
+    private String pathToPrintQuery = "\\src\\main\\resources\\display\\displayPositionTable.sql";
 
     public PositionDAO(Connection connection) {
         this.connection = connection;
@@ -96,6 +98,30 @@ public class PositionDAO {
     public void removeAll() {
         try (Statement sttm = connection.createStatement()) {
             sttm.execute(removeAll);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void print() {
+        System.out.println("POSITIONS TABLE:");
+        try (Statement sttm = connection.createStatement()) {
+            try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToPrintQuery))) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int columnsNumber = rsmd.getColumnCount();
+                for (int i = 1; i <= columnsNumber; i++) {
+                    System.out.print(String.format("|%-20s|", rsmd.getColumnLabel(i)));
+                }
+                System.out.println();
+                while (rs.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        String columnValue = rs.getString(i);
+                        System.out.print(String.format("|%-20s|", columnValue));
+                    }
+                    System.out.println();
+                }
+            }
+            System.out.println();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

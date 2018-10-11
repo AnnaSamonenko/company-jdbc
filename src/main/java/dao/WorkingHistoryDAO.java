@@ -1,6 +1,7 @@
 package dao;
 
 import entity.WorkingHistory;
+import utils.ReadSQLScript;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class WorkingHistoryDAO {
     private String select = "SELECT * FROM working_history";
     private String removeAll = "DELETE FROM working_history";
     private String selectByEmployeeId = "SELECT * FROM working_history WHERE employee_id = ?;";
+    private String pathToPrintQuery = "\\src\\main\\resources\\display\\displayWorkingHistoryTable.sql";
 
     public WorkingHistoryDAO(Connection connection) {
         this.connection = connection;
@@ -81,6 +83,30 @@ public class WorkingHistoryDAO {
     public void removeAll() {
         try (Statement sttm = connection.createStatement()) {
             sttm.execute(removeAll);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void print() {
+        System.out.println("WORKING HISTORY TABLE:");
+        try (Statement sttm = connection.createStatement()) {
+            try (ResultSet rs = sttm.executeQuery(ReadSQLScript.read(pathToPrintQuery))) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int columnsNumber = rsmd.getColumnCount();
+                for (int i = 1; i <= columnsNumber; i++) {
+                    System.out.print(String.format("|%-20s|", rsmd.getColumnLabel(i)));
+                }
+                System.out.println();
+                while (rs.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        String columnValue = rs.getString(i);
+                        System.out.print(String.format("|%-20s|", columnValue));
+                    }
+                    System.out.println();
+                }
+            }
+            System.out.println();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

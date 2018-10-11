@@ -1,4 +1,9 @@
-SELECT e.name, pr.title AS project_title, wh.start_date, wh.end_date, p.title as position_title
+SELECT
+    e.name AS NAME_SURNAME,
+    pr.title AS PROJECT_TITLE,
+     p.title AS POSITION_TITLE,
+    wh.start_date AS START_DATE,
+    wh.end_date AS END_DATE
 FROM working_history AS wh
 JOIN employees AS e
 ON e.employee_id =  wh.employee_id
