@@ -66,7 +66,6 @@ public class Employee {
                 ", contactInformation: " + contactInformation +
                 ", project: " + project.getTitle() +
                 ", position: " + position.getTitle() +
-                ", amount of projects: " + workingHistory.size() +
-                '}';
+                ", amount of projects: " + workingHistory.size() + "}";
     }
 }

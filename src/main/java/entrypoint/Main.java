@@ -14,14 +14,14 @@ import java.util.List;
 
 public class Main {
 
-    protected static final String URL = "jdbc:mysql://localhost:3306";
-    protected static final String USER = "root";
-    protected static final String PASSWORD = "root";
-    protected static final String DATABASE_NAME = "company_db";
+    static final String URL = "jdbc:mysql://localhost:3306";
+    static final String USER = "root";
+    static final String PASSWORD = "root";
+    static final String DATABASE_NAME = "company_db";
 
     public static void main(String[] args) {
-        int amountOfProjects = 3;
-        int amountOfEmployees = 20;
+        int amountOfProjects = 2;
+        int amountOfEmployees = 8;
         createContentOfTables(amountOfProjects, amountOfEmployees);
         printTables();
         System.out.println("------ RESULT OF 1 QUERY ------");
@@ -58,7 +58,7 @@ public class Main {
 
     private static void printList(List<Employee> list) {
         for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i) + "\n");
+            System.out.println(list.get(i));
         }
     }
 
