@@ -1,23 +1,14 @@
 package entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Position {
 
+    @Getter
+    @Setter
     private int id;
+    @Getter
+    @Setter
     private String title;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }
