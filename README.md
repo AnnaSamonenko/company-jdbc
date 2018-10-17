@@ -22,3 +22,6 @@ Use Java, JDBC, Mysql to write a program that will solve tasks listed below.
 2. Fill the database with several records generated randomly.
 3. Find the PM of the project with the highest count of java developers and print out his/her name and contact info.
 4. List all the test engineers that currently work at the company, sorted by count of projects they participated in.
+
+# EER diagram:
+![EER diagram](https://user-images.githubusercontent.com/17299069/47019308-6fa54300-d15f-11e8-9b4e-c0de22e61c40.png)
