@@ -29,7 +29,7 @@ public class Main {
         System.out.println();
         System.out.println("------ RESULT OF 2 QUERY ------");
         executeQuery2();
-        cleanTables();
+        //cleanTables();
     }
 
     //Find the PM of the project with the highest count of java developers
